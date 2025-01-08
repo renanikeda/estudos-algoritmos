@@ -29,9 +29,20 @@ void addNode(List *list, int value)  {
 	list->head = node;
 }
 
-void printList(List *list) {
+void deleteList(List *list) {
 	Node *current = list->head;
-	printf("HEAD -> ");
+	while (current != NULL) {
+		Node *temp = current;
+		printf("Deleting Node %d\n", temp->value);
+        current = current->next;
+		free(temp);
+    }
+	list->head = NULL;
+}
+
+void printList(List *list) {
+	if (list->head == NULL) return;
+	Node *current = list->head;
     while (current != NULL) {
         printf("%d -> ", current->value);
         current = current->next;
@@ -45,5 +56,7 @@ int main() {
 	addNode(list, 20);
 	addNode(list, 30);
 	addNode(list, 40);
+	printList(list);
+	deleteList(list);
 	printList(list);
 }

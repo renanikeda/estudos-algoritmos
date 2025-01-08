@@ -67,6 +67,32 @@ void deleteNode(List *list, int value) {
     printf("Node with value %d not found.\n", value);
 }
 
+void swapNodes(List *list, int value1, int value2) {
+    if (list->head == NULL) {
+        printf("The list is empty. Cannot swap.\n");
+        return;
+    }
+
+    Node *current = list->head;
+    Node *previous = NULL;
+
+    while (current != NULL) {
+        if (current->value == value1) {
+            if (previous == NULL) {
+                list->head = current->next;
+            } else {
+                previous->next = current->next;
+            }
+            free(current);
+            printf("Node with value %d deleted.\n", value1);
+            return;
+        }
+        previous = current;
+        current = current->next;
+    }
+
+}
+
 void printList(List *list) {
 	if (list->head == NULL) return;
 	Node *current = list->head;
@@ -78,15 +104,37 @@ void printList(List *list) {
     printf("NULL\n");
 }
 
-int main() {
+void printNode(Node *node) {
+	if (node == NULL) return;
+	printf("Node: %d", node->value);
+}
+
+List* testInstanceList() {
 	List *list = createList(NULL);
 	addNode(list, 10);
 	addNode(list, 20);
 	addNode(list, 30);
 	addNode(list, 40);
+	return list;
+}
+
+void testAdd() {
+	List *list = testInstanceList();
+	printList(list);
+};
+
+void testDelete() {
+	List *list = testInstanceList();
 	printList(list);
 	deleteNode(list, 20);
 	printList(list);
-	deleteList(list);
+};
+
+void testSwap() {
+	List *list = testInstanceList();
 	printList(list);
+}
+
+int main() {
+	testSwap();
 }

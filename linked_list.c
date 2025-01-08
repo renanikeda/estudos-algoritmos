@@ -31,6 +31,7 @@ void addNode(List *list, int value)  {
 
 void printList(List *list) {
 	Node *current = list->head;
+	printf("HEAD -> ");
     while (current != NULL) {
         printf("%d -> ", current->value);
         current = current->next;

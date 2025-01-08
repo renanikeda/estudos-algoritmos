@@ -103,28 +103,35 @@ void swapNodesByValue(List *list, int value1, int value2) {
     }
     Node *node1 = findNode(list, value1);
     Node *node2 = findNode(list, value2);
-    
+    if (node1 == NULL || node2 == NULL) {
+        printf("One or both nodes not found; cannot swap.\n");
+        return;
+    }
     Node *current = list->head;
     Node *previous = NULL;
-    int count = 0;
+    
     while (current != NULL) {
         printNode(current);
         if (current->value == value1) {
-            previous->next = node2;
-            node2->next = current->next;
-            current = node2;
-            return;
+            if (previous != NULL) { 
+                previous->next = node2;
+            } else {
+                list->head = node2;
+            }
         } else if (current->value == value2) {
-            previous->next = node1;
-            node1->next = current->next;
-            current = node1;
-            return;
+            if (previous != NULL) { 
+                previous->next = node1;
+            } else {
+                list->head = node1;
+            }
         }
-        count ++;
-        if (count > 10) return;
         previous = current;
         current = current->next;
     }
+
+    Node *temp = node1->next;
+    node1->next = node2->next;
+    node2->next = temp;
 
 }
 
@@ -198,7 +205,7 @@ void testSwap() {
 	List *list = testInstanceList();
     printList(list);
 	swapNodesByValue(list, 30, 20);
-    // printList(list);
+    printList(list);
 }
 
 int main() {

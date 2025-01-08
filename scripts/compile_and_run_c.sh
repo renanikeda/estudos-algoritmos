@@ -4,5 +4,8 @@ if [[ $# -eq 0 ]] ; then
 	exit 0;
 fi
 echo "Compiling: $1";
-gcc $1.c -o outputs/$1 && ./outputs/$1
+gcc $1.c -o outputs/$1
+
+echo "Compilation ok!";
+./outputs/$1
 

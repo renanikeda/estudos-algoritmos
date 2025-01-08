@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "linked_list.h"
 
-typedef struct Node {
-	int value;
-	struct Node *next;
-} Node;
-
-typedef struct List {
-	Node *head;
-} List;
 
 List *createList(Node *head) {
 	List *list = (List *)malloc(sizeof(List));
@@ -94,7 +87,48 @@ void deleteNode(List *list, Node *node) {
     printf("Node with value %d not found.\n", node->value);
 }
 
-void swapNodes(List *list, int value1, int value2) {
+Node* findNode(List *list, int value) {
+	Node *current = list->head;
+	while (current != NULL) {
+        if (current->value == value) return current;
+        current = current->next;
+    }
+}
+
+
+void swapNodesByValue(List *list, int value1, int value2) {
+    if (list->head == NULL) {
+        printf("The list is empty. Cannot swap.\n");
+        return;
+    }
+    Node *node1 = findNode(list, value1);
+    Node *node2 = findNode(list, value2);
+    
+    Node *current = list->head;
+    Node *previous = NULL;
+    int count = 0;
+    while (current != NULL) {
+        printNode(current);
+        if (current->value == value1) {
+            previous->next = node2;
+            node2->next = current->next;
+            current = node2;
+            return;
+        } else if (current->value == value2) {
+            previous->next = node1;
+            node1->next = current->next;
+            current = node1;
+            return;
+        }
+        count ++;
+        if (count > 10) return;
+        previous = current;
+        current = current->next;
+    }
+
+}
+
+void swapNodes(List *list, Node *node1, Node *node2) {
     if (list->head == NULL) {
         printf("The list is empty. Cannot swap.\n");
         return;
@@ -104,7 +138,8 @@ void swapNodes(List *list, int value1, int value2) {
     Node *previous = NULL;
 
     while (current != NULL) {
-        if (current->value == value1) {
+        printNode(current);
+        if (current == node1) {
             if (previous == NULL) {
                 list->head = current->next;
             } else {
@@ -161,9 +196,11 @@ void testDeleteNode() {
 
 void testSwap() {
 	List *list = testInstanceList();
-	printList(list);
+    printList(list);
+	swapNodesByValue(list, 30, 20);
+    // printList(list);
 }
 
 int main() {
-	testDeleteNode();
+	testSwap();
 }

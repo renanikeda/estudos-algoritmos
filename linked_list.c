@@ -136,27 +136,35 @@ void swapNodesByValue(List *list, int value1, int value2) {
 }
 
 void swapNodes(List *list, Node *node1, Node *node2) {
-    if (list->head == NULL) {
-        printf("The list is empty. Cannot swap.\n");
+    if (node1 == NULL || node2 == NULL) {
+        printf("One or both nodes not found; cannot swap.\n");
         return;
     }
-
     Node *current = list->head;
     Node *previous = NULL;
-
+    
     while (current != NULL) {
         printNode(current);
         if (current == node1) {
-            if (previous == NULL) {
-                list->head = current->next;
+            if (previous != NULL) { 
+                previous->next = node2;
             } else {
-                previous->next = current->next;
+                list->head = node2;
             }
-            return;
+        } else if (current == node2) {
+            if (previous != NULL) { 
+                previous->next = node1;
+            } else {
+                list->head = node1;
+            }
         }
         previous = current;
         current = current->next;
     }
+
+    Node *temp = node1->next;
+    node1->next = node2->next;
+    node2->next = temp;
 
 }
 

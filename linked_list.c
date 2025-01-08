@@ -40,7 +40,7 @@ void deleteList(List *list) {
 	list->head = NULL;
 }
 
-void deleteNode(List *list, int value) {
+void deleteNodeValue(List *list, int value) {
     if (list->head == NULL) {
         printf("The list is empty. Cannot delete.\n");
         return;
@@ -67,6 +67,33 @@ void deleteNode(List *list, int value) {
     printf("Node with value %d not found.\n", value);
 }
 
+void deleteNode(List *list, Node *node) {
+    if (list->head == NULL) {
+        printf("The list is empty. Cannot delete.\n");
+        return;
+    }
+
+    Node *current = list->head;
+    Node *previous = NULL;
+
+    while (current != NULL) {
+        if (current == node) {
+            if (previous == NULL) {
+                list->head = current->next;
+            } else {
+                previous->next = current->next;
+            }
+            printf("Node with value %d deleted.\n", current->value);
+            free(current);
+            return;
+        }
+        previous = current;
+        current = current->next;
+    }
+
+    printf("Node with value %d not found.\n", node->value);
+}
+
 void swapNodes(List *list, int value1, int value2) {
     if (list->head == NULL) {
         printf("The list is empty. Cannot swap.\n");
@@ -83,8 +110,6 @@ void swapNodes(List *list, int value1, int value2) {
             } else {
                 previous->next = current->next;
             }
-            free(current);
-            printf("Node with value %d deleted.\n", value1);
             return;
         }
         previous = current;
@@ -106,7 +131,7 @@ void printList(List *list) {
 
 void printNode(Node *node) {
 	if (node == NULL) return;
-	printf("Node: %d", node->value);
+	printf("Node: %d\n", node->value);
 }
 
 List* testInstanceList() {
@@ -123,10 +148,14 @@ void testAdd() {
 	printList(list);
 };
 
-void testDelete() {
+void testDeleteNode() {
 	List *list = testInstanceList();
 	printList(list);
-	deleteNode(list, 20);
+	Node *nodeToDelete = list->head->next;
+	printNode(nodeToDelete);
+	deleteNode(list, nodeToDelete);
+	printList(list);
+	deleteNodeValue(list, 20);
 	printList(list);
 };
 
@@ -136,5 +165,5 @@ void testSwap() {
 }
 
 int main() {
-	testSwap();
+	testDeleteNode();
 }

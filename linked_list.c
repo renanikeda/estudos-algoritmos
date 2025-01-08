@@ -40,7 +40,7 @@ void deleteList(List *list) {
 	list->head = NULL;
 }
 
-void deleteNodeValue(List *list, int value) {
+void deleteNodeByValue(List *list, int value) {
     if (list->head == NULL) {
         printf("The list is empty. Cannot delete.\n");
         return;
@@ -155,7 +155,7 @@ void testDeleteNode() {
 	printNode(nodeToDelete);
 	deleteNode(list, nodeToDelete);
 	printList(list);
-	deleteNodeValue(list, 20);
+	deleteNodeByValue(list, 20);
 	printList(list);
 };
 

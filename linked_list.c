@@ -40,9 +40,37 @@ void deleteList(List *list) {
 	list->head = NULL;
 }
 
+void deleteNode(List *list, int value) {
+    if (list->head == NULL) {
+        printf("The list is empty. Cannot delete.\n");
+        return;
+    }
+
+    Node *current = list->head;
+    Node *previous = NULL;
+
+    while (current != NULL) {
+        if (current->value == value) {
+            if (previous == NULL) {
+                list->head = current->next;
+            } else {
+                previous->next = current->next;
+            }
+            free(current);
+            printf("Node with value %d deleted.\n", value);
+            return;
+        }
+        previous = current;
+        current = current->next;
+    }
+
+    printf("Node with value %d not found.\n", value);
+}
+
 void printList(List *list) {
 	if (list->head == NULL) return;
 	Node *current = list->head;
+	printf("HEAD -> ");
     while (current != NULL) {
         printf("%d -> ", current->value);
         current = current->next;
@@ -56,6 +84,8 @@ int main() {
 	addNode(list, 20);
 	addNode(list, 30);
 	addNode(list, 40);
+	printList(list);
+	deleteNode(list, 20);
 	printList(list);
 	deleteList(list);
 	printList(list);

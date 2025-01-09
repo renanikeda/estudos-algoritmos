@@ -29,6 +29,7 @@ void swapNodesByValue(List *list, int value1, int value2);
 void swapNodes(List *list, Node *node1, Node *node2);
 List *cloneList(List *list);
 List* invertList(List *list);
+void invertListInplace(List *list);
 int popList(List *list);
 void printList(List *list);
 void printNode(Node *node);

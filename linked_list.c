@@ -196,6 +196,23 @@ List* invertList(List *list) {
     return new_list;
 }
 
+void invertListInplace(List *list) {
+    Node *prev = NULL;
+    Node *head = list->head;
+    while (head != NULL) {
+        Node *next_head = head->next;
+        if (prev == NULL) {
+            head->next = NULL;
+        } else {
+            head->next = prev;
+        }
+        prev = head;
+        head = next_head;
+    }
+    list->head = prev;
+    return;
+}
+
 void printList(List *list) {
 	if (list->head == NULL) {
         printf("Empty list\n");
@@ -212,7 +229,10 @@ void printList(List *list) {
 }
 
 void printNode(Node *node) {
-	if (node == NULL) return;
+	if (node == NULL) {
+        printf("Node: NULL\n");   
+        return;
+    }
 	printf("Node: %d\n", node->value);
 }
 
@@ -265,6 +285,8 @@ void testInvert() {
     List *inverted_list = invertList(list);
     printList(inverted_list);
     printList(list);
+    invertListInplace(inverted_list);
+    printList(inverted_list);
 }
 
 int main() {

@@ -176,6 +176,13 @@ List* cloneList(List *list) {
     return new_list;
 }
 
+int popList(List *list) {
+    Node* tail = getTail(list);
+    int value = tail->value;
+    deleteNode(list, tail);
+    return value;
+}
+
 void printList(List *list) {
 	if (list->head == NULL) {
         printf("Empty list\n");
@@ -232,7 +239,13 @@ void testClone() {
     List *new_list = cloneList(list);
     printList(new_list);
 }
+void testPop() {
+    List *list = testInstanceList();
+    printList(list);
+    int popped_value = popList(list);
+    printList(list);
+}
 
 int main() {
-	testClone();
+	testPop();
 }

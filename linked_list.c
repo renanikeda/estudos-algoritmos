@@ -27,6 +27,26 @@ void addNode(List *list, int value)  {
 	list->head = node;
 }
 
+Node* getTail(List *list) {
+    Node *prev = list->head;
+    Node *curr = list->head;
+    while(curr != NULL) {
+        prev = curr;
+        curr = curr->next;
+    }
+    return prev;
+}
+
+void pushNode(List *list, int value) {  
+    Node *node = createNode(value);
+    Node *tail = getTail(list);
+    if (tail == NULL) {
+        list->head = node;
+    } else {
+        tail->next = node;
+    }
+}
+
 void deleteList(List *list) {
 	Node *current = list->head;
 	while (current != NULL) {
@@ -146,8 +166,21 @@ void swapNodes(List *list, Node *node1, Node *node2) {
 
 }
 
+List* cloneList(List *list) {
+    List *new_list = createList(NULL);
+    Node *head = list->head;
+    while(head != NULL) {
+        pushNode(new_list, head->value);
+        head = head->next;
+    }
+    return new_list;
+}
+
 void printList(List *list) {
-	if (list->head == NULL) return;
+	if (list->head == NULL) {
+        printf("Empty list\n");
+        return;
+    }
 	Node *current = list->head;
 	printf("HEAD -> ");
     while (current != NULL) {
@@ -155,6 +188,7 @@ void printList(List *list) {
         current = current->next;
     }
     printf("NULL\n");
+    return;
 }
 
 void printNode(Node *node) {
@@ -163,7 +197,7 @@ void printNode(Node *node) {
 }
 
 List* testInstanceList() {
-    int values[] = {40, 30, 20, 10, 0};
+    int values[] = {0, 1, 2, 3, 4, 5};
     int len = sizeof(values) / sizeof(values[0]);
 	List *list = generateList(values, len);
 	return list;
@@ -192,6 +226,13 @@ void testSwap() {
     printList(list);
 }
 
+void testClone() {
+    List *list = testInstanceList();
+    printList(list);
+    List *new_list = cloneList(list);
+    printList(new_list);
+}
+
 int main() {
-	testSwap();
+	testClone();
 }

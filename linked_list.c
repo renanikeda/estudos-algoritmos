@@ -183,6 +183,19 @@ int popList(List *list) {
     return value;
 }
 
+
+List* invertList(List *list) {
+    List *new_list = createList(NULL);
+    Node *head = list->head;
+    while (head != NULL) {
+        addNode(new_list, head->value);
+        Node *temp = head;
+        head = head->next;
+        deleteNode(list, temp);
+    }
+    return new_list;
+}
+
 void printList(List *list) {
 	if (list->head == NULL) {
         printf("Empty list\n");
@@ -246,6 +259,14 @@ void testPop() {
     printList(list);
 }
 
+void testInvert() {
+    List *list = testInstanceList();
+    printList(list);
+    List *inverted_list = invertList(list);
+    printList(inverted_list);
+    printList(list);
+}
+
 int main() {
-	testPop();
+	testInvert();
 }

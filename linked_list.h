@@ -28,6 +28,7 @@ Node *findNode(List *list, int value);
 void swapNodesByValue(List *list, int value1, int value2);
 void swapNodes(List *list, Node *node1, Node *node2);
 List *cloneList(List *list);
+List* invertList(List *list);
 int popList(List *list);
 void printList(List *list);
 void printNode(Node *node);
@@ -39,5 +40,6 @@ void testDeleteNode();
 void testSwap();
 void testClone();
 void testPop();
+void testInvert() 
 
 #endif // LINKED_LIST_H

@@ -16,6 +16,11 @@ Node *createNode(int value) {
 	return node;
 }
 
+List* generateList(int values[], int len) {
+	List *list = createList(NULL);
+    for(int i = len -1; i >= 0; i--) addNode(list, values[i]);
+}
+
 void addNode(List *list, int value)  {
 	Node *node = createNode(value);
 	node->next = list->head;
@@ -183,7 +188,9 @@ void testDeleteNode() {
 };
 
 void testSwap() {
-	List *list = testInstanceList();
+    int values[] = {40, 30, 20, 10, 0};
+    int len = sizeof(values) / sizeof(values[0]);
+	List *list = generateList(values, len);
     printList(list);
 	swapNodesByValue(list, 30, 20);
     printList(list);

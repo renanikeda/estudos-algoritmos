@@ -40,6 +40,6 @@ void testDeleteNode();
 void testSwap();
 void testClone();
 void testPop();
-void testInvert() 
+void testInvert();
 
 #endif // LINKED_LIST_H

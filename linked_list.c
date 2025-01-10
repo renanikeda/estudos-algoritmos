@@ -248,6 +248,31 @@ void sortListInplace(List* list) {
     return;
 }
 
+int* getBucket(int maxValue, List* list) {
+    int *bucket = (int*) calloc(maxValue, sizeof(int));
+    Node *curr = list->head;
+    while (curr != NULL){
+        bucket[curr->value] += 1;
+        curr = curr->next;
+    }
+    return bucket;
+}
+
+void removeDuplicatesBucket(List* list){
+    int maxValue = 100;
+    int *bucket = getBucket(maxValue, list);
+
+    Node *curr = list->head;
+    while (curr != NULL){
+        Node* next_node = curr->next;
+        if (bucket[curr->value] > 1) {
+            bucket[curr->value]--;
+            deleteNode(list, curr);
+        }
+        curr = next_node;
+    }
+}
+
 void printList(List *list) {
 	if (list->head == NULL) {
         printf("Empty list\n");
@@ -331,6 +356,14 @@ void testInsert() {
     printList(new_list);
 }
 
+void testDuplicates() {
+    List *list = testInstanceList();
+    insertSorted(list, 3);
+    insertSorted(list, 5);
+    printList(list);
+    removeDuplicatesBucket(list);
+    printList(list);
+}
 int main() {
-	testInsert();
+	testDuplicates();
 }

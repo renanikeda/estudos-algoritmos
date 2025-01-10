@@ -213,6 +213,41 @@ void invertListInplace(List *list) {
     return;
 }
 
+void insertSorted(List *list, int value) {
+    Node *curr = list->head;
+    while (curr != NULL && curr->value < value) {
+        curr = curr->next;
+    }
+
+    if (curr == NULL) {
+        pushNode(list, value);
+        return;
+    } else {
+        Node *new_node = createNode(value);
+        Node *next_node = curr->next;
+        curr->next = new_node;
+        new_node->next = next_node;
+    }
+}
+
+List* sortList(List *list) {
+    List *new_list = createList(NULL);
+    Node *curr = list->head;
+    if (curr == NULL) {
+        return new_list;
+    }
+
+    while (curr != NULL) {
+        insertSorted(new_list, curr->value);
+        curr = curr->next;
+    }
+    return new_list;
+}
+
+void sortListInplace(List* list) {
+    return;
+}
+
 void printList(List *list) {
 	if (list->head == NULL) {
         printf("Empty list\n");
@@ -289,6 +324,13 @@ void testInvert() {
     printList(inverted_list);
 }
 
+void testInsert() {
+    List *list = testInstanceList();
+    printList(list);
+    List *new_list = sortList(list);
+    printList(new_list);
+}
+
 int main() {
-	testInvert();
+	testInsert();
 }

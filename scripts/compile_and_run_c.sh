@@ -5,7 +5,5 @@ if [[ $# -eq 0 ]] ; then
 fi
 echo "Compiling: $1";
 gcc $1.c -o outputs/$1
-
-echo "Compilation ok!";
 ./outputs/$1
 
